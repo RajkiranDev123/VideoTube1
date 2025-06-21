@@ -1,0 +1,5 @@
+npm init -y
+npm i express
+npm i mongoose dotenv cors
+npm install --save-dev nodemon
+npm i cloudinary
