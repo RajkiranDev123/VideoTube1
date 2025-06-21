@@ -6,9 +6,9 @@ import { users } from "../models/usersSchema.js"
 //////////////////////////////////////////////// add new user ///////////////////////////////////////////////////////////////
 export const userRegister = async (req, res) => {
 
-    const { username, email, password } = req.body
-    if (!username || !email || !password) {
-        return res.status(400).json("All fields are required!")
+    const { email, password } = req.body
+    if (!email || !password) {
+        return res.status(400).json({ message: "All fields are required!" })
     }
     try {
         let user = await users.findOne({ email: email })
@@ -19,15 +19,15 @@ export const userRegister = async (req, res) => {
 
 
             const userData = new users({
-                username, email, password
+                email, password
             })
 
             await userData.save()
-            return res.status(201).json(userData)
+            return res.status(201).json({ userData, message: "Account Created!" })
         }
     } catch (error) {
-   
-        return res.status(500).json(error.message)
+
+        return res.status(500).json({ message: error.message })
     }
 }
 ///////////////////////////////////////////////////////getAllUsers//////////////////////////////////////////////////////////////////////////
