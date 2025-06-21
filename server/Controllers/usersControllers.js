@@ -1,9 +1,10 @@
 
 import { users } from "../models/usersSchema.js"
 
+import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
 
-
-//////////////////////////////////////////////// add new user ///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////// register ///////////////////////////////////////////////////////////////
 export const userRegister = async (req, res) => {
 
     const { email, password } = req.body
@@ -17,9 +18,10 @@ export const userRegister = async (req, res) => {
             return res.status(400).json({ message: "user email already exists!" })
         } else {
 
+            const hashedpassword = await bcrypt.hash(password, 10)
 
             const userData = new users({
-                email, password
+                email, password: hashedpassword
             })
 
             await userData.save()
@@ -30,47 +32,33 @@ export const userRegister = async (req, res) => {
         return res.status(500).json({ message: error.message })
     }
 }
-///////////////////////////////////////////////////////getAllUsers//////////////////////////////////////////////////////////////////////////
-export const getAllUsers = async (req, res) => {
-    const search = req.query.search || ""
-    const gender = req.query.gender //default is All
-    const status = req.query.status //default is all
-    const sort = req.query.sort      // default is new
+///////////////////////////////////////////////////////login//////////////////////////////////////////////////////////////////////////
 
-    const dateRange = req.headers["date-range"]
-    console.log("dr==>", dateRange)//2025-03-05--2025-03-05
-    let start = dateRange?.split("--")[0] + "T00:00:00Z"
-    let end = dateRange?.split("--")[1] + "T23:59:59Z"
+export const userLogin = async (req, res) => {
 
-    const page = req.query.page || 1
-    const ITEM_PER_PAGE = 4
-
-    const query = { fname: { $regex: search, $options: "i" } }
-    if (gender !== "All") {
-        query.gender = gender
-    }
-    if (status !== "All") {
-        query.status = status
-    }
-    if (dateRange !== "") {
-        query.dateCreated = { $gte: start, $lte: end }
-    }
     try {
-        const totalDocs = await users.countDocuments(query)
-        const skip = (page - 1) * ITEM_PER_PAGE
-        const pageCount = Math.ceil(totalDocs / ITEM_PER_PAGE)//pageCount is total pages 8/4=2 pages
-        const usersData = await users.find(query).skip(skip).limit(ITEM_PER_PAGE).sort({ dateCreated: sort == "new" ? -1 : 1 })
+        const { email, password } = req.body
 
-        return res.status(200).json({
-            pagination: {
-                pageCount
-            },
-            usersData
-        })
+        if (!email || !password) {
+            return res.status(400).json({ message: "All fields are required!", })
+        }
+        const user = await users.findOne({ email: email })
+
+        if (!user) {
+            return res.status(400).json({ message: "User does not exists!", })
+        }
+        const isPasswordValid = await bcrypt.compare(password, user.password)
+        if (!isPasswordValid) {
+            return res.status(400).json({ message: "Invalid password!", })
+        }
+
+        const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, { expiresIn: "6d" })
+
+
+        return res.status(200).json({ message: "User logged-in Successfully!", token: token, email: email,userId:user?._id })
+
     } catch (error) {
-        // console.log(error.message)
-        return res.status(500).json(error)
+        return res.status(500).json({ message: error.message })
     }
 }
-
 

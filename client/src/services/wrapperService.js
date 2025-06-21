@@ -7,11 +7,11 @@ export const wrapper = async (method, url, body, header) => {
 
     return axios(config) 
         .then(data => {
-            console.log(1,data)
+         
 
             return data
         }).catch(error => {
-            console.log(2,error)
+          
             return error
         })
 }

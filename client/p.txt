@@ -19,3 +19,4 @@ npm run dev
 
 npm i react-router-dom
 npm i react-hot-toast
+npm i axios

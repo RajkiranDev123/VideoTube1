@@ -1,7 +1,7 @@
 import express from "express"
 
 import {
-    userRegister, getAllUsers
+    userRegister, userLogin
 
 } from "../Controllers/usersControllers.js"
 
@@ -11,7 +11,7 @@ const router = new express.Router()
 router.post("/register", userRegister)
 
 
-router.get("/getAllUsers", getAllUsers)
+router.post("/login", userLogin)
 
 
 
