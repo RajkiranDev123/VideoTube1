@@ -1,6 +1,9 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+        const navigate=useNavigate()
+    
     return (
         <div style={{ display: "flex", justifyContent: "center", background: "#36454F", height: "100vh" }}>
             <div
@@ -28,6 +31,10 @@ const Login = () => {
 
                 <div style={{ textAlign: "center" }}>
                     <button style={{ border: "none", outline: "none", padding: 3, borderRadius: 4, width: 150,cursor:"pointer" }}>Login</button>
+                </div>
+
+                  <div style={{textAlign:"center"}}>
+                    <p style={{cursor:"pointer",color:"white"}} onClick={()=>navigate("/register")}>Create an Account!</p>
                 </div>
 
 

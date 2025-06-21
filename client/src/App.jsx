@@ -1,21 +1,28 @@
 import { useState } from 'react'
+import { Toaster } from 'react-hot-toast'
 
 
-import {BrowserRouter, Routes,Route} from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import Register from './pages/Register'
 function App() {
-  const [count, setCount] = useState(0)
+
+
 
   return (
     <>
-   <BrowserRouter>
-   <Routes>
-    <Route path="/" element={<Login/>}/>
-    <Route path="/dashboard" element={<Dashboard/>}/>
+      <Toaster position='top-center' reverseOrder={false} />
 
-   </Routes>
-   </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
+          <Route path="/" element={<Dashboard />} />
+
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
