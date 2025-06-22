@@ -11,6 +11,10 @@ const Register = () => {
 
     const register = async () => {
         // const config = { "Content-Type": "application/json" }
+        if(password.length<9){
+            toast.error("Password must be 9 digits or greater!")
+            return
+        }
 
         const response = await registerUser({ email, password })
         if (response?.status === 201) {
