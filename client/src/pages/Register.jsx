@@ -27,12 +27,13 @@ const Register = () => {
         }
     }
     return (
-        <div style={{ display: "flex", justifyContent: "center", background: "#36454F", height: "100vh" }}>
+        <div style={{ display: "flex", justifyContent: "center", background: "linear-gradient(to right, #159957, #155799)",
+         height: "100vh" }}>
 
 
             <div
                 style={{
-                    width: 300, height: 500, background: "#C0C0C0",
+                    width: 300, height: 500, background: "linear-gradient(to right, #159957, #155799)",
                     borderRadius: 4, backgroundColor: "grey", marginTop: 100, display: "flex", flexDirection: "column", justifyContent: "center"
                 }}>
 
@@ -40,7 +41,7 @@ const Register = () => {
                     <h3> ➤ Video Tube !</h3>
                 </div>
                 <div style={{ textAlign: "center", fontFamily: "arial" }}>
-                    <p> Register Here!</p>
+                    <p style={{color:"white"}}> Register Here!</p>
                 </div>
 
                 <div>
@@ -54,11 +55,11 @@ const Register = () => {
                 </div>
 
                 <div style={{ textAlign: "center" }}>
-                    <button onClick={() => register()} style={{ border: "none", outline: "none", padding: 3, borderRadius: 4, width: 150, cursor: "pointer" }}>Create your Account</button>
+                    <button onClick={() => register()} style={{ border: "none", outline: "none", padding: 3, borderRadius: 4, width: 150, cursor: "pointer",background:"red",color:"white" }}>Create your Account</button>
                 </div>
 
                 <div style={{ textAlign: "center" }}>
-                    <p style={{ cursor: "pointer", color: "white" }} onClick={() => navigate("/login")}>Go to Login</p>
+                    <p style={{ cursor: "pointer", color: "white" }} onClick={() => navigate("/login")}>Go to <span style={{textDecoration:"underline"}}>Login</span></p>
                 </div>
 
 

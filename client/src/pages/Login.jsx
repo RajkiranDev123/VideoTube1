@@ -34,12 +34,12 @@ const Login = () => {
         }
     }
     return (
-        <div style={{ display: "flex", justifyContent: "center", background: "#36454F", height: "100vh" }}>
+        <div style={{ display: "flex", justifyContent: "center", background: "linear-gradient(to right, #159957, #155799)", height: "100vh" }}>
 
 
             <div
                 style={{
-                    width: 300, height: 500, background: "#C0C0C0",
+                    width: 300, height: 500, background: "linear-gradient(to right, #159957, #155799)",
                     borderRadius: 4, backgroundColor: "grey", marginTop: 100, display: "flex", flexDirection: "column", justifyContent: "center"
                 }}>
 
@@ -47,16 +47,16 @@ const Login = () => {
                     <h3> ➤ Video Tube !</h3>
                 </div>
                 <div style={{ textAlign: "center", fontFamily: "arial" }}>
-                    <p> Login Here!</p>
+                    <p style={{color:"white"}}> Login Here!</p>
                 </div>
 
                 <div>
-                    <p style={{ fontSize: 14, color: "black", display: "flex", alignItems: "center", gap: 2 }}>Test Email :
+                    <p style={{ fontSize: 14, color: "white", display: "flex", alignItems: "center", gap: 2,fontStyle:"italic" }}>Test Email :
                         <CopyToClipboard text="user1@gmail.com">
                             <span style={{ cursor: "pointer", color: "white", display: "flex", alignItems: "center" }}> Copy 🗍</span>
                         </CopyToClipboard>
                     </p>
-                        <p style={{ fontSize: 14, color: "black", display: "flex", alignItems: "center", gap: 2 }}>Test Password :
+                        <p style={{ fontSize: 14, color: "white", display: "flex", alignItems: "center", gap: 2 ,fontStyle:"italic"}}>Test Password :
                         <CopyToClipboard text="123456789">
                             <span style={{ cursor: "pointer", color: "white", display: "flex", alignItems: "center" }}> Copy 🗍</span>
                         </CopyToClipboard>
@@ -71,11 +71,11 @@ const Login = () => {
                 </div>
 
                 <div style={{ textAlign: "center" }}>
-                    <button onClick={() => login()} style={{ border: "none", outline: "none", padding: 3, borderRadius: 4, width: 150, cursor: "pointer" }}>Login</button>
+                    <button onClick={() => login()} style={{ border: "none", outline: "none", padding: 3, borderRadius: 4, width: 150, cursor: "pointer",background:"green",color:"white" }}>Login</button>
                 </div>
 
                 <div style={{ textAlign: "center" }}>
-                    <p style={{ cursor: "pointer", color: "white" }} onClick={() => navigate("/register")}>No Account! Go to Register</p>
+                    <p style={{ cursor: "pointer", color: "white" }} onClick={() => navigate("/register")}>No Account! <span style={{textDecoration:"underline"}}>Go to Register</span></p>
                 </div>
 
 

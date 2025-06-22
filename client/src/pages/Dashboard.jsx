@@ -99,7 +99,12 @@ const Dashboard = () => {
   const handleFileChange = (e) => {
     setSelecting(true)
     const file = e.target.files[0];
-    console.log(file)
+    
+    console.log("check file==>",file)
+    if(file.type!=="video/mp4"){
+      toast.error("Video must be mp4!")
+      return
+    }
     setVideo(file)
     const previewUrl = URL.createObjectURL(file);
     setVideoPreviewUrl(previewUrl);
@@ -163,29 +168,29 @@ const Dashboard = () => {
   }, [])
 
   return (
-    <div>
+    <div style={{background:"linear-gradient(to right, #5d4157, #a8caba)",padding:3}}>
 
-      <div style={{ height: "64px", background: "grey", display: "flex", justifyContent: "space-between", padding: 4 }}>
+      <div style={{ height: "64px", background: "linear-gradient(to right, #283048, #859398)", display: "flex", justifyContent: "space-between", padding: 4 }}>
         <div>
           <h2 style={{ fontFamily: "monospace", color: "white" }}>➤ My Video tube </h2>
         </div>
 
         <div style={{ display: "flex", gap: 9, alignItems: "center" }}>
           <p style={{ color: "white", fontStyle: "italic" }}>hi, {localStorage?.getItem("email")?.split("@")[0]}</p>
-          <p onClick={() => logout()} style={{ color: "#811331", cursor: "pointer", fontFamily: "arial", fontWeight: "bold" }}>⏻ Logout</p>
+          <p onClick={() => logout()} style={{ color: "red", cursor: "pointer", fontFamily: "arial", fontWeight: "bold" }}>⏻</p>
         </div>
 
       </div>
 
 
       {/* meta admin*/}
-      <div style={{ display: "flex", gap: 5, justifyContent: "space-evenly", marginTop: 3 }}>
-        <div style={{ fontFamily: "arial" }}>My Total Videos : {allVideos && allVideos?.length}</div>
+      <div style={{ display: "flex", gap: 5, justifyContent: "space-evenly", marginTop: 3 ,flexWrap:"wrap"}}>
+        <div style={{ fontFamily: "arial",color:"wheat" }}>My Total Videos : {allVideos && allVideos?.length}</div>
 
-        <div style={{ display: "flex", gap: 1 }}>Search by Title :
-          <input type='text' placeholder='title...' onChange={(e) => setTitle(e.target.value)} />
-          <button id='u' onClick={() => getVideos(title)}>Search</button>
-          <button onClick={() => { setTitle(""); getVideos("") }}>Clear</button>
+        <div style={{ display: "flex", gap: 1 ,color:"wheat"}}>
+          <input type='text' style={{borderRadius:3}} placeholder='Search by Title ...' onChange={(e) => setTitle(e.target.value)} />
+          <button style={{background:"green",color:"white",borderRadius:3,border:"none"}} id='u' onClick={() => getVideos(title)}>Search</button>
+          <button style={{background:"red",color:"white",borderRadius:3,border:"none"}} onClick={() => { setTitle(""); getVideos("") }}>Clear</button>
 
 
         </div>
@@ -197,9 +202,9 @@ const Dashboard = () => {
       {/* videos */}
       <div>
 
-        <h3 style={{ fontFamily: "arial" }}>My Videos : </h3>
+        <h3 style={{ fontFamily: "arial" ,color:"wheat"}}>My Videos : </h3>
 
-        <div style={{ height: "50vh", overflowY: "scroll", background: "black", borderRadius: 4, display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center", padding: 4 }}>
+        <div style={{ height: "50vh", overflowY: "scroll", background: "linear-gradient(to right, #1d2b64, #f8cdda)", borderRadius: 4, display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center", padding: 4 }}>
 
           {allVideos && allVideos?.map((e, i) => {
             return (
@@ -207,7 +212,7 @@ const Dashboard = () => {
                 <div style={{ background: "white", padding: 2, borderRadius: 3 }}>
 
 
-                  <video width="400" loop controls>
+                  <video width="310" loop controls>
                     <source src={e?.cloudinaryUrl} type="video/mp4" />
 
                     Your browser does not support HTML video.
@@ -235,7 +240,7 @@ const Dashboard = () => {
 
       {/* view selected video */}
 
-      {video && <div style={{ textAlign: "center", background: "grey" }}>
+      {video && <div style={{ textAlign: "center", background: "black" }}>
         <h3 style={{ color: "white", fontFamily: "arial", padding: 5, borderRadius: 4 }}>Preview!</h3>
         <video style={{ margin: 2, borderRadius: 3 }} width="400" loop controls>
           <source src={videoPreviewUrl} type="video/mp4" />
@@ -296,7 +301,7 @@ const Dashboard = () => {
 
       <div style={{ textAlign: "center", margin: 9 }}>
         {video && <button onClick={() => uploadToServer()}
-          style={{ padding: 4, background: "green", color: "white", borderRadius: 3, border: "none", cursor: "pointer" }}>UPLOAD TO SERVER</button>}
+          style={{ padding: 4, background: "green", color: "white", borderRadius: 3, border: "none", cursor: "pointer",fontFamily:"monospace" }}>UPLOAD TO SERVER</button>}
 
       </div>
 
