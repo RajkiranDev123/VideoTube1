@@ -15,6 +15,7 @@ const Dashboard = () => {
   const [uploading, setUploading] = useState(false)
   const [videoPreviewUrl, setVideoPreviewUrl] = useState("")
   const hiddenFileInput = useRef(null);
+  
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
@@ -183,7 +184,7 @@ const Dashboard = () => {
 
         <div style={{ display: "flex", gap: 1 }}>Search by Title :
           <input type='text' placeholder='title...' onChange={(e) => setTitle(e.target.value)} />
-          <button onClick={() => getVideos(title)}>Search</button>
+          <button id='u' onClick={() => getVideos(title)}>Search</button>
           <button onClick={() => { setTitle(""); getVideos("") }}>Clear</button>
 
 

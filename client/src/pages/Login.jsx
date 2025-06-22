@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from "react-hot-toast"
 import { loginUser } from "../services/ApiRequests"
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -11,7 +12,7 @@ const Login = () => {
 
     const login = async () => {
         // const config = { "Content-Type": "application/json" }
-          if(password.length<9){
+        if (password.length < 9) {
             toast.error("Password must be 9 digits or greater!")
             return
         }
@@ -50,6 +51,16 @@ const Login = () => {
                 </div>
 
                 <div>
+                    <p style={{ fontSize: 14, color: "black", display: "flex", alignItems: "center", gap: 2 }}>Test Email :
+                        <CopyToClipboard text="user1@gmail.com">
+                            <span style={{ cursor: "pointer", color: "white", display: "flex", alignItems: "center" }}> Copy 🗍</span>
+                        </CopyToClipboard>
+                    </p>
+                        <p style={{ fontSize: 14, color: "black", display: "flex", alignItems: "center", gap: 2 }}>Test Password :
+                        <CopyToClipboard text="123456789">
+                            <span style={{ cursor: "pointer", color: "white", display: "flex", alignItems: "center" }}> Copy 🗍</span>
+                        </CopyToClipboard>
+                    </p>
                     <input onChange={(e) => setEmail(e.target.value)} value={email}
                         style={{ border: "none", outline: "none", padding: 6, borderRadius: 3, width: "280px", margin: 5 }} type='text' placeholder='email' />
                 </div>
