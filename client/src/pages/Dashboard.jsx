@@ -4,6 +4,7 @@ import moment from "moment"
 import { useNavigate } from 'react-router-dom'
 import { toast } from "react-hot-toast"
 import { uploadVideoToServer, getVideosFromServer, deleteVideoFromServer } from '../services/ApiRequests'
+import Loader from '../components/Loader'
 const Dashboard = () => {
   const navigate = useNavigate()
   const [video, setVideo] = useState(null)
@@ -202,10 +203,10 @@ const Dashboard = () => {
 
       {/* meta admin*/}
       <div style={{ display: "flex", gap: 5, justifyContent: "space-evenly", marginTop: 3, flexWrap: "wrap" }}>
-        <div style={{ fontFamily: "arial", color: "wheat" }}>My Total Videos : {allVideos && allVideos?.length}</div>
+        <div style={{ fontFamily: "arial", color: "white" }}>My Total Videos : {allVideos && allVideos?.length}</div>
 
         <div style={{ display: "flex", gap: 1, color: "wheat" }}>
-          <input type='text' style={{ borderRadius: 3 }} placeholder='Search by Title ...' onChange={(e) => setTitle(e.target.value)} />
+          <input type='text' style={{ borderRadius: 3,border:"none",padding:3 }} placeholder='Search by Title ...' onChange={(e) => setTitle(e.target.value)} />
           <button style={{ background: "green", color: "white", borderRadius: 3, border: "none" }} id='u' onClick={() => getVideos(title)}>Search</button>
           <button style={{ background: "red", color: "white", borderRadius: 3, border: "none" }} onClick={() => { setTitle(""); getVideos("") }}>Clear</button>
 
@@ -239,7 +240,7 @@ const Dashboard = () => {
                   <p style={{ fontFamily: "monospace" }}>Title : {e?.title}</p>
                   <p style={{ fontFamily: "monospace" }}>Description : {e?.description}</p>
                   <p style={{ fontFamily: "monospace" }}>Upload Date : {e?.createdAt?.slice(0, 10)}{" , " + formatTime(e?.createdAt)}</p>
-                  <p>{delLoad==e?._id  &&  <span style={{ color: "red" }}>Deleteing...</span>}</p>
+                  <p>{delLoad==e?._id  &&  <span style={{ color: "red" }}><Loader/></span>}</p>
 
                   <p><button onClick={() => deleteVideo(e?._id)}
                     style={{ cursor: "pointer", padding: 2, background: "red", color: "white", borderRadius: 3, border: "none" }}>Delete ! </button></p>
@@ -298,8 +299,8 @@ const Dashboard = () => {
 
       {
         video && <div style={{ display: "flex", flexDirection: "column", gap: 5, margin: 3 }}>
-          <input onChange={(e) => setTitle(e.target.value)} value={title} placeholder='set title....' />
-          <textarea onChange={(e) => setDescription(e.target.value)} value={description} placeholder='set description...'></textarea>
+          <input style={{border:"none",outline:"none"}} onChange={(e) => setTitle(e.target.value)} value={title} placeholder='set title....' />
+          <textarea style={{border:"none",outline:"none"}} onChange={(e) => setDescription(e.target.value)} value={description} placeholder='set description...'></textarea>
         </div>
       }
 
@@ -313,7 +314,7 @@ const Dashboard = () => {
 
 
       {/* upload to server */}
-      {uploading && <p style={{ textAlign: "center", color: "white" }}>Uploading... plz wait!</p>}
+      {uploading && <p style={{ textAlign: "center", color: "white",display:"flex",justifyContent:"center" }}>Uploading &nbsp; <Loader/></p>}
 
 
       <div style={{ textAlign: "center", margin: 9 }}>

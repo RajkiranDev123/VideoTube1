@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from "react-hot-toast"
 import { loginUser } from "../services/ApiRequests"
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import Loader from '../components/Loader';
 const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -40,12 +41,12 @@ const Login = () => {
         }
     }
     return (
-        <div style={{ display: "flex", justifyContent: "center", background: "linear-gradient(to right, #159957, #155799)", height: "100vh" }}>
+        <div style={{ display: "flex", justifyContent: "center", background: "linear-gradient(to right, #DECBA4, #3E5151)", height: "100vh" }}>
 
 
             <div
                 style={{
-                    width: 300, height: 500, background: "linear-gradient(to right, #159957, #155799)", padding: 3,
+                    width: 300, height: 500, background: "linear-gradient(to left, #DECBA4, #3E5151)", padding: 3,
                     borderRadius: 4, backgroundColor: "grey", marginTop: 100, display: "flex", flexDirection: "column", justifyContent: "center"
                 }}>
 
@@ -67,12 +68,12 @@ const Login = () => {
 
                 <div>
                     <p style={{ fontSize: 14, color: "white", display: "flex", alignItems: "center", gap: 2, fontStyle: "italic" }}>Test Email :
-                        <CopyToClipboard text="user1@gmail.com">
+                        <CopyToClipboard text="userVid@gmail.com">
                             <span style={{ cursor: "pointer", color: "white", display: "flex", alignItems: "center" }}> Copy 🗍</span>
                         </CopyToClipboard>
                     </p>
                     <p style={{ fontSize: 14, color: "white", display: "flex", alignItems: "center", gap: 2, fontStyle: "italic" }}>Test Password :
-                        <CopyToClipboard text="123456789">
+                        <CopyToClipboard text="pass12345@A">
                             <span style={{ cursor: "pointer", color: "white", display: "flex", alignItems: "center" }}> Copy 🗍</span>
                         </CopyToClipboard>
                     </p>
@@ -84,7 +85,7 @@ const Login = () => {
                     <input onChange={(e) => setPassword(e.target.value)} value={password}
                         style={{ border: "none", outline: "none", padding: 6, borderRadius: 3, width: "280px", margin: 5 }} type='password' placeholder='password' />
                 </div>
-               {loading&& <p style={{color:"white",textAlign:"center"}}>Wait...!</p>}
+               {loading&& <p style={{color:"white",display:"flex",justifyContent:"center"}}><Loader/></p>}
 
 
                 <div style={{ textAlign: "center" }}>

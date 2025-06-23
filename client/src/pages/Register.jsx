@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from "react-hot-toast"
 import { registerUser } from "../services/ApiRequests"
+import Loader from '../components/Loader'
 const Register = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -28,6 +29,7 @@ const Register = () => {
             setEmail("")
             setPassword("")
             setLoading(false)
+            navigate("/login")
         } else {
             setLoading(false)
 
@@ -36,14 +38,14 @@ const Register = () => {
     }
     return (
         <div style={{
-            display: "flex", justifyContent: "center", background: "linear-gradient(to right, #159957, #155799)",
+            display: "flex", justifyContent: "center", background: "linear-gradient(to right, #DECBA4, #3E5151)",
             height: "100vh"
         }}>
 
 
             <div
                 style={{
-                    width: 300, height: 500, background: "linear-gradient(to right, #159957, #155799)",
+                    width: 300, height: 500, background: "linear-gradient(to bottom, #DECBA4, #3E5151)",
                     borderRadius: 4, backgroundColor: "grey", marginTop: 100, display: "flex", flexDirection: "column", justifyContent: "center"
                 }}>
 
@@ -64,7 +66,8 @@ const Register = () => {
                         style={{ border: "none", outline: "none", padding: 6, borderRadius: 3, width: "280px", margin: 5 }} type='password' placeholder='password' />
                 </div>
 
-                {loading && <p style={{ color: "white", textAlign: "center" }}>Wait... Creating your account!</p>}
+                            {loading&& <p style={{color:"white",display:"flex",justifyContent:"center"}}><Loader/></p>}
+
 
                 <div style={{ textAlign: "center" }}>
                     <button onClick={() => register()} style={{ border: "none", outline: "none", padding: 3, borderRadius: 4, width: 150, cursor: "pointer", background: "red", color: "white" }}>Create your Account</button>
