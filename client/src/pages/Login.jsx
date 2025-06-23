@@ -39,24 +39,33 @@ const Login = () => {
 
             <div
                 style={{
-                    width: 300, height: 500, background: "linear-gradient(to right, #159957, #155799)",
+                    width: 300, height: 500, background: "linear-gradient(to right, #159957, #155799)",padding:3,
                     borderRadius: 4, backgroundColor: "grey", marginTop: 100, display: "flex", flexDirection: "column", justifyContent: "center"
                 }}>
 
                 <div style={{ textAlign: "center", fontFamily: "arial" }}>
-                    <h3> ➤ Video Tube !</h3>
+                    <h3 style={{color:"white"}}> ➤ Video Tube !</h3>
+
+                    <video style={{ margin: 2, borderRadius: 9 }} width="250" height="110" loop autoPlay controls muted >
+                        <source src="/a.mp4" type="video/mp4" />
+
+                        Your browser does not support HTML video.
+                    </video>
+
+
+
                 </div>
                 <div style={{ textAlign: "center", fontFamily: "arial" }}>
-                    <p style={{color:"white"}}> Login Here!</p>
+                    <p style={{ color: "white" }}> Login Here!</p>
                 </div>
 
                 <div>
-                    <p style={{ fontSize: 14, color: "white", display: "flex", alignItems: "center", gap: 2,fontStyle:"italic" }}>Test Email :
+                    <p style={{ fontSize: 14, color: "white", display: "flex", alignItems: "center", gap: 2, fontStyle: "italic" }}>Test Email :
                         <CopyToClipboard text="user1@gmail.com">
                             <span style={{ cursor: "pointer", color: "white", display: "flex", alignItems: "center" }}> Copy 🗍</span>
                         </CopyToClipboard>
                     </p>
-                        <p style={{ fontSize: 14, color: "white", display: "flex", alignItems: "center", gap: 2 ,fontStyle:"italic"}}>Test Password :
+                    <p style={{ fontSize: 14, color: "white", display: "flex", alignItems: "center", gap: 2, fontStyle: "italic" }}>Test Password :
                         <CopyToClipboard text="123456789">
                             <span style={{ cursor: "pointer", color: "white", display: "flex", alignItems: "center" }}> Copy 🗍</span>
                         </CopyToClipboard>
@@ -71,11 +80,11 @@ const Login = () => {
                 </div>
 
                 <div style={{ textAlign: "center" }}>
-                    <button onClick={() => login()} style={{ border: "none", outline: "none", padding: 3, borderRadius: 4, width: 150, cursor: "pointer",background:"green",color:"white" }}>Login</button>
+                    <button onClick={() => login()} style={{ border: "none", outline: "none", padding: 3, borderRadius: 4, width: 150, cursor: "pointer", background: "green", color: "white" }}>Login</button>
                 </div>
 
                 <div style={{ textAlign: "center" }}>
-                    <p style={{ cursor: "pointer", color: "white" }} onClick={() => navigate("/register")}>No Account! <span style={{textDecoration:"underline"}}>Go to Register</span></p>
+                    <p style={{ cursor: "pointer", color: "white" }} onClick={() => navigate("/register")}>No Account! <span style={{ textDecoration: "underline" }}>Go to Register</span></p>
                 </div>
 
 
