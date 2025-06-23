@@ -66,13 +66,23 @@ export const uploadVideo = async (req, res) => {
 export const getVideos = async (req, res) => {
     try {
         const title = req.headers.title || ""
+
+        const page = req.headers.page || 1
+        const ITEM_PER_PAGE = 4
+        const skip = (page - 1) * ITEM_PER_PAGE
+
         const query = { title: { $regex: title, $options: "i" }, user: req.userId }
-        const allVideos = await video.find(query)
+        const totalDocs = await video.countDocuments(query)
+        const pageCount = Math.ceil(totalDocs / ITEM_PER_PAGE)
+
+        const allVideos = await video.find(query).skip(skip).limit(ITEM_PER_PAGE)
 
         return res.status(200).json({
             message: "All videos fetched successfully!",
 
-            allVideos
+            allVideos,
+            pageCount,
+            totalDocs
         })
     } catch (error) {
         return res.status(500).json({ message: error.message })
@@ -84,8 +94,8 @@ export const getVideos = async (req, res) => {
 export const deleteVideo = async (req, res) => {
     try {
         const id = req.headers.vid;
-        
-      
+
+
 
 
         const videoToDelete = await video.findById(id);
@@ -94,7 +104,7 @@ export const deleteVideo = async (req, res) => {
             return res.status(404).json({ message: 'Video not found!' });
         }
 
-        console.log(55,videoToDelete.cloudinaryPublicId)
+        console.log(55, videoToDelete.cloudinaryPublicId)
 
 
         if (videoToDelete.cloudinaryPublicId) {
@@ -102,19 +112,19 @@ export const deleteVideo = async (req, res) => {
                 resource_type: 'video'
             });
 
-            console.log("res",cloudinaryResult)
-         
+            console.log("res", cloudinaryResult)
+
 
             if (cloudinaryResult.result !== 'ok' && cloudinaryResult.result !== 'not found') {
-        
+
                 console.warn(`Cloudinary deletion for public ID ${videoToDelete.cloudinaryPublicId} returned: ${cloudinaryResult.result}`);
             }
         }
 
-    
+
         await video.findByIdAndDelete(id);
 
-        res.status(200).json({ message: 'Video deleted successfully!'});
+        res.status(200).json({ message: 'Video deleted successfully!' });
 
     } catch (error) {
         console.error('Error deleting video:', error);
