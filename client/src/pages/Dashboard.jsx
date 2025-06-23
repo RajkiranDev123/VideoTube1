@@ -15,7 +15,7 @@ const Dashboard = () => {
   const [uploading, setUploading] = useState(false)
   const [videoPreviewUrl, setVideoPreviewUrl] = useState("")
   const hiddenFileInput = useRef(null);
-  
+
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
@@ -97,11 +97,23 @@ const Dashboard = () => {
   }
 
   const handleFileChange = (e) => {
+
     setSelecting(true)
     const file = e.target.files[0];
-    
-    console.log("check file==>",file)
-    if(file.type!=="video/mp4"){
+
+    //
+    const MB = 10
+    const fileSizeInMB = file.size / (1024 * 1024); //bytes to mb
+    if (fileSizeInMB > MB) {
+      toast.error("Video must be less than 10mb!")
+      return
+    }
+
+
+    //
+
+    console.log("check file==>", file)
+    if (file.type !== "video/mp4") {
       toast.error("Video must be mp4!")
       return
     }
@@ -161,14 +173,19 @@ const Dashboard = () => {
   useEffect(() => {
 
     let getEmail = localStorage.getItem("email")
-    if (!getEmail) { navigate("/login") }
+    if (!getEmail) {
 
-    getVideos()
+      navigate("/login")
+    } else {
+      getVideos()
+
+    }
+
 
   }, [])
 
   return (
-    <div style={{background:"linear-gradient(to right, #5d4157, #a8caba)",padding:3}}>
+    <div style={{ background: "linear-gradient(to right, #5d4157, #a8caba)", padding: 3 }}>
 
       <div style={{ height: "64px", background: "linear-gradient(to right, #283048, #859398)", display: "flex", justifyContent: "space-between", padding: 4 }}>
         <div>
@@ -184,13 +201,13 @@ const Dashboard = () => {
 
 
       {/* meta admin*/}
-      <div style={{ display: "flex", gap: 5, justifyContent: "space-evenly", marginTop: 3 ,flexWrap:"wrap"}}>
-        <div style={{ fontFamily: "arial",color:"wheat" }}>My Total Videos : {allVideos && allVideos?.length}</div>
+      <div style={{ display: "flex", gap: 5, justifyContent: "space-evenly", marginTop: 3, flexWrap: "wrap" }}>
+        <div style={{ fontFamily: "arial", color: "wheat" }}>My Total Videos : {allVideos && allVideos?.length}</div>
 
-        <div style={{ display: "flex", gap: 1 ,color:"wheat"}}>
-          <input type='text' style={{borderRadius:3}} placeholder='Search by Title ...' onChange={(e) => setTitle(e.target.value)} />
-          <button style={{background:"green",color:"white",borderRadius:3,border:"none"}} id='u' onClick={() => getVideos(title)}>Search</button>
-          <button style={{background:"red",color:"white",borderRadius:3,border:"none"}} onClick={() => { setTitle(""); getVideos("") }}>Clear</button>
+        <div style={{ display: "flex", gap: 1, color: "wheat" }}>
+          <input type='text' style={{ borderRadius: 3 }} placeholder='Search by Title ...' onChange={(e) => setTitle(e.target.value)} />
+          <button style={{ background: "green", color: "white", borderRadius: 3, border: "none" }} id='u' onClick={() => getVideos(title)}>Search</button>
+          <button style={{ background: "red", color: "white", borderRadius: 3, border: "none" }} onClick={() => { setTitle(""); getVideos("") }}>Clear</button>
 
 
         </div>
@@ -202,7 +219,7 @@ const Dashboard = () => {
       {/* videos */}
       <div>
 
-        <h3 style={{ fontFamily: "arial" ,color:"wheat"}}>My Videos : </h3>
+        <h3 style={{ fontFamily: "arial", color: "wheat" }}>My Videos : </h3>
 
         <div style={{ height: "50vh", overflowY: "scroll", background: "linear-gradient(to right, #1d2b64, #f8cdda)", borderRadius: 4, display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center", padding: 4 }}>
 
@@ -296,12 +313,12 @@ const Dashboard = () => {
 
 
       {/* upload to server */}
-      {uploading && <p style={{ textAlign: "center", color: "red" }}>Uploading... plz wait!</p>}
+      {uploading && <p style={{ textAlign: "center", color: "white" }}>Uploading... plz wait!</p>}
 
 
       <div style={{ textAlign: "center", margin: 9 }}>
         {video && <button onClick={() => uploadToServer()}
-          style={{ padding: 4, background: "green", color: "white", borderRadius: 3, border: "none", cursor: "pointer",fontFamily:"monospace" }}>UPLOAD TO SERVER</button>}
+          style={{ padding: 4, background: "green", color: "white", borderRadius: 3, border: "none", cursor: "pointer", fontFamily: "monospace" }}>UPLOAD TO SERVER</button>}
 
       </div>
 

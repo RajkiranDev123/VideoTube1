@@ -6,13 +6,18 @@ import { registerUser } from "../services/ApiRequests"
 const Register = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [loading, setLoading] = useState(false)
+
 
     const navigate = useNavigate()
 
     const register = async () => {
         // const config = { "Content-Type": "application/json" }
-        if(password.length<9){
+        setLoading(true)
+        if (password.length < 9) {
             toast.error("Password must be 9 digits or greater!")
+            setLoading(false)
+
             return
         }
 
@@ -22,13 +27,18 @@ const Register = () => {
 
             setEmail("")
             setPassword("")
+            setLoading(false)
         } else {
+            setLoading(false)
+
             toast.error(response?.response?.data?.message)
         }
     }
     return (
-        <div style={{ display: "flex", justifyContent: "center", background: "linear-gradient(to right, #159957, #155799)",
-         height: "100vh" }}>
+        <div style={{
+            display: "flex", justifyContent: "center", background: "linear-gradient(to right, #159957, #155799)",
+            height: "100vh"
+        }}>
 
 
             <div
@@ -41,7 +51,7 @@ const Register = () => {
                     <h3> ➤ Video Tube !</h3>
                 </div>
                 <div style={{ textAlign: "center", fontFamily: "arial" }}>
-                    <p style={{color:"white"}}> Register Here!</p>
+                    <p style={{ color: "white" }}> Register Here!</p>
                 </div>
 
                 <div>
@@ -54,12 +64,14 @@ const Register = () => {
                         style={{ border: "none", outline: "none", padding: 6, borderRadius: 3, width: "280px", margin: 5 }} type='password' placeholder='password' />
                 </div>
 
+                {loading && <p style={{ color: "white", textAlign: "center" }}>Wait... Creating your account!</p>}
+
                 <div style={{ textAlign: "center" }}>
-                    <button onClick={() => register()} style={{ border: "none", outline: "none", padding: 3, borderRadius: 4, width: 150, cursor: "pointer",background:"red",color:"white" }}>Create your Account</button>
+                    <button onClick={() => register()} style={{ border: "none", outline: "none", padding: 3, borderRadius: 4, width: 150, cursor: "pointer", background: "red", color: "white" }}>Create your Account</button>
                 </div>
 
                 <div style={{ textAlign: "center" }}>
-                    <p style={{ cursor: "pointer", color: "white" }} onClick={() => navigate("/login")}>Go to <span style={{textDecoration:"underline"}}>Login</span></p>
+                    <p style={{ cursor: "pointer", color: "white" }} onClick={() => navigate("/login")}>Go to <span style={{ textDecoration: "underline" }}>Login</span></p>
                 </div>
 
 
