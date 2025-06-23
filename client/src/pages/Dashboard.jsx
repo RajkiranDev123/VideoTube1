@@ -10,7 +10,7 @@ const Dashboard = () => {
   const [allVideos, setAllVideos] = useState([])
 
   const [selecting, setSelecting] = useState(false)
-  const [delLoad, setDelLoad] = useState(false)
+  const [delLoad, setDelLoad] = useState("")
 
   const [uploading, setUploading] = useState(false)
   const [videoPreviewUrl, setVideoPreviewUrl] = useState("")
@@ -62,7 +62,7 @@ const Dashboard = () => {
   }
 
   const deleteVideo = async (videoId) => {
-    setDelLoad(true)
+    setDelLoad(videoId)
 
     const config = {
       "Content-Type": "application/json",
@@ -77,14 +77,14 @@ const Dashboard = () => {
 
 
       toast.success(response?.data?.message)
-      setDelLoad(false)
+      setDelLoad("")
       getVideos()
 
 
 
     } else {
       toast.error(response?.response?.data?.message)
-      setDelLoad(false)
+      setDelLoad("")
     }
 
 
@@ -239,7 +239,7 @@ const Dashboard = () => {
                   <p style={{ fontFamily: "monospace" }}>Title : {e?.title}</p>
                   <p style={{ fontFamily: "monospace" }}>Description : {e?.description}</p>
                   <p style={{ fontFamily: "monospace" }}>Upload Date : {e?.createdAt?.slice(0, 10)}{" , " + formatTime(e?.createdAt)}</p>
-                  <p>{delLoad && <span style={{ color: "red" }}>Deleteing...</span>}</p>
+                  <p>{delLoad==e?._id  &&  <span style={{ color: "red" }}>Deleteing...</span>}</p>
 
                   <p><button onClick={() => deleteVideo(e?._id)}
                     style={{ cursor: "pointer", padding: 2, background: "red", color: "white", borderRadius: 3, border: "none" }}>Delete ! </button></p>
