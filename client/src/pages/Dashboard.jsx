@@ -21,6 +21,11 @@ const Dashboard = () => {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
 
+  const [page, setPage] = useState(1)
+  const [pageCount, setPageCount] = useState(0)
+  const [totalDocs, setTotalDocs] = useState(0)
+
+
 
 
   const formatTime = (timestamp) => {
@@ -43,13 +48,18 @@ const Dashboard = () => {
     const config = {
       "Content-Type": "application/json",
       "authorization": `Bearer ${localStorage.getItem("token")}`,
-      "title": searchByTitle ? searchByTitle : ""
+      "title": searchByTitle ? searchByTitle : "",
+      "page": page
+
 
     }
 
     const response = await getVideosFromServer("", config)
     if (response?.status === 200) {
       setAllVideos(response?.data?.allVideos)
+      setTotalDocs(response?.data?.totalDocs)
+      setPageCount(response?.data?.pageCount)
+
 
       toast.success(response?.data?.message)
 
@@ -61,6 +71,27 @@ const Dashboard = () => {
 
 
   }
+
+
+  const handlePrevious = () => {
+    setPage(
+      () => {
+        if (page == 1) return page
+        return page - 1
+      }
+    )
+  }
+
+  const handleNext = () => {
+    setPage(
+      () => {
+        if (page == pageCount) return page
+        return page + 1
+      }
+    )
+  }
+
+
 
   const deleteVideo = async (videoId) => {
     setDelLoad(videoId)
@@ -183,7 +214,9 @@ const Dashboard = () => {
     }
 
 
-  }, [])
+  }, [page])
+
+  
 
   return (
     <div style={{ background: "linear-gradient(to right, #5d4157, #a8caba)", padding: 3 }}>
@@ -203,10 +236,10 @@ const Dashboard = () => {
 
       {/* meta admin*/}
       <div style={{ display: "flex", gap: 5, justifyContent: "space-evenly", marginTop: 3, flexWrap: "wrap" }}>
-        <div style={{ fontFamily: "arial", color: "white" }}>My Total Videos : {allVideos && allVideos?.length}</div>
+        <div style={{ fontFamily: "arial", color: "white" }}>My Total Videos : {totalDocs}</div>
 
         <div style={{ display: "flex", gap: 1, color: "wheat" }}>
-          <input type='text' style={{ borderRadius: 3,border:"none",padding:3 }} placeholder='Search by Title ...' onChange={(e) => setTitle(e.target.value)} />
+          <input type='text' style={{ borderRadius: 3, border: "none", padding: 3 }} placeholder='Search by Title ...' onChange={(e) => setTitle(e.target.value)} />
           <button style={{ background: "green", color: "white", borderRadius: 3, border: "none" }} id='u' onClick={() => getVideos(title)}>Search</button>
           <button style={{ background: "red", color: "white", borderRadius: 3, border: "none" }} onClick={() => { setTitle(""); getVideos("") }}>Clear</button>
 
@@ -240,7 +273,7 @@ const Dashboard = () => {
                   <p style={{ fontFamily: "monospace" }}>Title : {e?.title}</p>
                   <p style={{ fontFamily: "monospace" }}>Description : {e?.description}</p>
                   <p style={{ fontFamily: "monospace" }}>Upload Date : {e?.createdAt?.slice(0, 10)}{" , " + formatTime(e?.createdAt)}</p>
-                  <p>{delLoad==e?._id  &&  <span style={{ color: "red" }}><Loader/></span>}</p>
+                  <p>{delLoad == e?._id && <span style={{ color: "red" }}><Loader /></span>}</p>
 
                   <p><button onClick={() => deleteVideo(e?._id)}
                     style={{ cursor: "pointer", padding: 2, background: "red", color: "white", borderRadius: 3, border: "none" }}>Delete ! </button></p>
@@ -250,6 +283,14 @@ const Dashboard = () => {
             )
           })}
 
+
+
+
+        </div>
+        <div style={{ textAlign: "center" }}>
+          <button onClick={()=>handlePrevious()} style={{ cursor: "pointer", border: "none", borderRadius: 3, background: "red", color: "white",margin:2 }}> Prev</button>
+          <span style={{color:"white",fontWeight:"bold"}}>{page}</span>
+          <button onClick={()=>handleNext()} style={{ cursor: "pointer", border: "none", borderRadius: 3, background: "red", color: "white" ,margin:2}}>Next</button>
 
         </div>
 
@@ -299,8 +340,8 @@ const Dashboard = () => {
 
       {
         video && <div style={{ display: "flex", flexDirection: "column", gap: 5, margin: 3 }}>
-          <input style={{border:"none",outline:"none"}} onChange={(e) => setTitle(e.target.value)} value={title} placeholder='set title....' />
-          <textarea style={{border:"none",outline:"none"}} onChange={(e) => setDescription(e.target.value)} value={description} placeholder='set description...'></textarea>
+          <input style={{ border: "none", outline: "none" }} onChange={(e) => setTitle(e.target.value)} value={title} placeholder='set title....' />
+          <textarea style={{ border: "none", outline: "none" }} onChange={(e) => setDescription(e.target.value)} value={description} placeholder='set description...'></textarea>
         </div>
       }
 
@@ -314,7 +355,7 @@ const Dashboard = () => {
 
 
       {/* upload to server */}
-      {uploading && <p style={{ textAlign: "center", color: "white",display:"flex",justifyContent:"center" }}>Uploading &nbsp; <Loader/></p>}
+      {uploading && <p style={{ textAlign: "center", color: "white", display: "flex", justifyContent: "center" }}>Uploading &nbsp; <Loader /></p>}
 
 
       <div style={{ textAlign: "center", margin: 9 }}>
